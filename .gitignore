@@ -1,0 +1,14 @@
+*.npy
+*.npz
+*.pt
+*.pth
+*.onnx
+*.ckpt
+*.log
+*.tmp
+__pycache__/
+.DS_Store
+.env
+*.zip
+*.tar
+*.tar.gz
