@@ -1,5 +1,35 @@
 # 图片翻译结构化流程伪代码
 
+## HTML 合成数据
+
+```text
+PROCEDURE render_html_synthetic_sample(html_template, layout_config):
+    page <- fill_template_with_text_images_and_styles(html_template, layout_config)
+    element_map <- assign_unique_color_to_each_trainable_element(page)
+    rendered_page <- playwright_render(page.visible_layer)
+    id_mask <- playwright_render(page.color_id_layer)
+
+    annotations <- EMPTY_LIST
+    FOR each color_id IN element_map:
+        pixels <- find_pixels_with_color(id_mask, color_id)
+        polygon <- trace_visible_region_boundary(pixels)
+        bbox <- enclosing_box(polygon)
+        annotations.append({
+            element_id: element_map[color_id].id,
+            type: element_map[color_id].type,
+            text: element_map[color_id].text,
+            bbox: bbox,
+            polygon: polygon
+        })
+
+    RETURN {
+        image: rendered_page,
+        annotations: annotations
+    }
+```
+
+## VLM 难例标注
+
 ```text
 PROCEDURE extract_ocr_lines(image):
     normalized_image <- normalize_orientation_and_resolution(image)
